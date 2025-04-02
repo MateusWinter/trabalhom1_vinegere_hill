@@ -40,7 +40,7 @@ class Hill:
         self.added_x = False  # Variável para determinar se um x foi adicionado ao final da cifra
 
         # Forçado para manter apenas matrizes quadradas de tamanho 2
-        if np.len(matriz) != 2:
+        if len(matriz) != 2:
             raise ValueError("A matriz e sua inversa de devem ter o mesmo formato e tamanho 2")
             
     
