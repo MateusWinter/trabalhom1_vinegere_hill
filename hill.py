@@ -1,5 +1,7 @@
 import numpy as np
 
+# NOTAS: A matriz inversa está sendo calculada ao invés de repassada estaticamente. A matriz de criptografia porém é definida estaticamente.
+
 def mod_inverse(a, mod):
     """
     Calcula o inverso modular de 'a' em relação a 'mod'
@@ -38,6 +40,7 @@ class Hill:
         self.matriz_inversa = modular_inverse_matrix(matriz, 26)
         # self.matriz_inversa = matriz_inversa
         self.added_x = False  # Variável para determinar se um x foi adicionado ao final da cifra
+        self.last_encrypted = "" # Salva o valor da última criptografia
 
         # Forçado para manter apenas matrizes quadradas de tamanho 2
         if len(matriz) != 2:
@@ -68,15 +71,16 @@ class Hill:
             c2 = chr(resultado_vetor[1] + ord('a'))                 # retornando para o espaço do ascii (2º caracter)
             
             resultado += c1 + c2                # adiciona os caracteres cifrados ao resultado
-        
+        self.last_encrypted = resultado
         return resultado                        # retorna a cifra de hill
 
-    def hill_decrypt(self, texto_cifrado):
+    def hill_decrypt(self):
         '''
         Decifragem de um texto cifrado pelo método de hill
         Cifra de hill parametrizada com tamanho da matriz quadrada = 2
         É esperado que o texto cifrado tenha um número par de caracteres.
         '''
+        texto_cifrado = self.last_encrypted         # Pega o último valor cifrado para realizar a descriptografia
         texto_cifrado = ''.join(c for c in texto_cifrado.lower() if c.isalpha()) # garante que o texto cifrado seja um texto com caracteres minúsculos e no espaço de [A-Za-z]
         
         resultado = ""                              # cria a variável para receber o resultado da decifragem 
